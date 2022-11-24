@@ -1,4 +1,3 @@
-package JavaBankApplication;
 
 // ************************************************************************
 // BankProgram.java	 Template created on 15.9.2016
@@ -61,7 +60,7 @@ public class BankProgram {
 		System.out.print("\n*** Account list ***\n");
 		for (Account accounts : accountList) {
 			System.out.println("Number: " + accounts.getAccountNumber() + " | Balance: "
-					+ twoDecimals.format(accounts.getBalance()));
+					+ twoDecimals.format(accounts.getBalance()) + " euros");
 		}
 		
 
@@ -74,14 +73,15 @@ public class BankProgram {
 		Scanner input = new Scanner(System.in);
 		
 		for (int i = 0; i <= accountList.size(); i++) {
-			System.out.print("Enter account number: ");
+			
 			String inputString = input.nextLine();
 			if (findAccount(inputString) == null && !inputString.isEmpty()) {
 				accountList.add(new Account(inputString, 0));
 				System.out.println("Account created successfully!");
-				break;
+			break;
 			} else {
-				System.out.println("Account not created. Account: " + inputString + " exists already!");
+				System.out.println("Account not created. Account " + inputString + " exists already!");
+				break;
 			}
 		}
 
@@ -117,7 +117,7 @@ public class BankProgram {
 			}
 
 		} else {
-			System.out.println("Account " + inputAccount + " doesn't exists!");
+			System.out.println("Account " + inputAccount + " does not exist!");
 		}
 
 	}
@@ -131,11 +131,13 @@ public class BankProgram {
 			double withdrawalAmount = Double.parseDouble(input.nextLine()); 
 			if(findAccount(inputAccount).withDraw(withdrawalAmount) == true) {
 				System.out.println("Withdrawal completed successfully!");
-			} else {
-				System.out.println("Withdrawal not completed. Available balance is too low");
+			}else if(withdrawalAmount < 0){
+				System.out.println("Cannot withdraw a negative amount!");
+			}  else {
+				System.out.println("Withdrawal not completed. Available balance is too low.");
 			}
 		} else {
-			System.out.println("Account " + inputAccount + " doesn't exist!");
+			System.out.println("Account " + inputAccount + " does not exist!");
 		}
 
 	}
@@ -149,9 +151,8 @@ public class BankProgram {
 			accountList.remove(i); 
 			System.out.println("Account deleted successfully!");
 		} else {
-			System.out.println("Nothing deleted. Account: " + deleteAccount + " does not exist!");
+			System.out.println("Nothing deleted. Account " + deleteAccount + " does not exist!");
 		}
 
 	}
 }
-// End
